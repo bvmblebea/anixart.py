@@ -1,5 +1,6 @@
 # anixart.py
 Mobile-API for [Anixart](https://anixart.tv) anime app
+![](https://anixart.tv/images/logo_email.png)
 
 ## Example
 ```python3
