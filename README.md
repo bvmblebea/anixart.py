@@ -11,3 +11,4 @@ anix_client = anixart.AniXClient()
 anix_client.login(login="email or login", password="password")
 print(f"-- Account user_id::: {anix_client.user_id}")
 ```
+You can use [this](https://github.com/SantaSpeen/anixart) lib.
