@@ -4,7 +4,7 @@ class AnixClient:
 	def __init__(self):
 		self.api = "https://api.anixart.tv"
 		self.headers = {
-		"User-Agent": "AnixartApp/7.9.2-21121202 (Android 7.1.2; SDK 25; x86; samsung SM-N975F; ru)",
+		"User-Agent": "AnixartApp/8.0-22050323 (Android 7.1.2; SDK 25; x86; samsung SM-N975F; ru)",
 		"Connection": "Keep-Alive",
 		"Accept-Encoding": "gzip"}
 		self.token = None
@@ -131,7 +131,8 @@ class AnixClient:
 			instagram: str = None,
 			telegram: str = None,
 			vkontakte: str = None,
-			tiktok: str = None):
+			tiktok: str = None,
+			discord: str = None):
 		data = {}
 		if instagram:
 			data["instPage"] = instagram
@@ -141,6 +142,8 @@ class AnixClient:
 			data["vkPage"] = vkontakte
 		if tiktok:
 			data["ttPage"] = tiktok
+		if discord:
+			data["discordPage"] = discord
 		return requests.post(
 			f"{self.api}/profile/preference/social/edit?token={self.token}",
 			json=data,
@@ -357,4 +360,33 @@ class AnixClient:
 		return requests.post(
 			f"{self.api}/search/profiles/0?token={self.token}",
 			data=data,
+			headers=self.headers).json()
+
+	def get_friend_requests(self):
+		return requests.get(
+			f"{self.api}/profile/friend/requests/in/last?token={self.token}",
+			headers=self.headers).json()
+
+	def get_sent_friend_requests(self):
+		return requests.get(
+			f"{self.api}/profile/friend/requests/out/last?token={self.token}",
+			headers=self.headers).json()
+
+	def get_friend_recommendations(self):
+		return requests.get(
+			f"{self.api}/profile/friend/recommendations?token={self.token}", 
+			headers=self.headers).json()
+
+	def accept_friend_request(self, user_id: int):
+		return requests.get(
+			f"{self.api}/profile/friend/request/send/{user_id}?token={self.token}", 
+			headers=self.headers).json()
+
+	def get_user_comments(
+			self,
+			user_id: int,
+			page: int = 0,
+			sort: int = 0):
+		return requests.get(
+			f"{self.api}/release/comment/all/profile/{user_id}/{page}?sort={sort}&token={self.token}",
 			headers=self.headers).json()
