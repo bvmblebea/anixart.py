@@ -1,7 +1,7 @@
 import requests
 
 class Anixart:
-	def __init__(self, proxies: dict = None):
+	def __init__(self, proxies: dict = None) -> None:
 		self.api = "https://api.anixart.tv"
 		self.headers = {
 			"User-Agent": "AnixartApp/8.0-22050323 (Android 7.1.2; SDK 25; x86; samsung SM-N975F; ru)",
@@ -12,7 +12,10 @@ class Anixart:
 		self.user_id = None
 		self.proxies = proxies
 
-	def login(self, login: str, password: str):
+	def login(
+			self,
+			login: str,
+			password: str) -> dict:
 		data = {
 			"login": login,
 			"password": password
@@ -31,7 +34,7 @@ class Anixart:
 			self,
 			email: str,
 			password: str,
-			login: str):
+			login: str) -> dict:
 		data = {
 			"login": login,
 			"email": email,
@@ -49,7 +52,7 @@ class Anixart:
 			password: str,
 			login: str,
 			code: int,
-			hash: str):
+			hash: str) -> dict:
 		data = {
 			"login": login,
 			"email": email,
@@ -63,43 +66,43 @@ class Anixart:
 			headers=self.headers,
 			proxies=self.proxies).json()
 			
-	def get_login_firebase(self):
+	def get_login_firebase(self) -> dict:
 		return requests.post(
 			f"{self.api}/auth/firebase?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def get_schedule(self):
+	def get_schedule(self) -> dict:
 		return requests.get(
 			f"{self.api}/schedule?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 		
-	def get_user_info(self, user_id: int):
+	def get_user_info(self, user_id: int) -> dict:
 		return requests.get(
 			f"{self.api}/profile/{user_id}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 
-	def get_user_nickname_history(self, user_id: int, page: int = 0):
+	def get_user_nickname_history(self, user_id: int, page: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/profile/login/history/all{user_id}/{page}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 			
-	def get_blocklist(self, page: int = 0):
+	def get_blocklist(self, page: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/profile/blocklist/all/{page}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def block_user(self, user_id: int):
+	def block_user(self, user_id: int) -> dict:
 		return requests.post(
 			f"{self.api}/profile/blocklist/add/{user_id}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def unblock_user(self, user_id: int):
+	def unblock_user(self, user_id: int) -> dict:
 		return requests.post(
 			f"{self.api}/profile/blocklist/remove/{user_id}?token={self.token}",
 			headers=self.headers,
@@ -109,7 +112,7 @@ class Anixart:
 			self,
 			user_id: int,
 			sort: int = 1,
-			page: int = 0):
+			page: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/profile/vote/release/voted/{user_id}/{page}?sort={sort}&token={self.token}",
 			headers=self.headers,
@@ -119,26 +122,31 @@ class Anixart:
 			self,
 			user_id: int,
 			sort: int = 1,
-			page: int = 0):
+			page: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/profile/vote/release/unvoted/{user_id}/{page}?sort={sort}&token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def get_all_type_of_sounds(self):
+	def get_all_type_of_sounds(self) -> dict:
 		return requests.get(
 			f"{self.api}/type/all?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def get_user_friends(self, user_id: int, page: int = 0):
+	def get_user_friends(
+			self,
+			user_id: int,
+			page: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/profile/friend/all/{user_id}/{page}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def edit_profile_status(self, status: str):
-		data = {"status": status}
+	def edit_profile_status(self, status: str) -> dict:
+		data = {
+			"status": status
+		}
 		return requests.post(
 			f"{self.api}/profile/preference/status/edit?token={self.token}",
 			json=data,
@@ -151,7 +159,7 @@ class Anixart:
 			telegram: str = None,
 			vkontakte: str = None,
 			tiktok: str = None,
-			discord: str = None):
+			discord: str = None) -> dict:
 		data = {}
 		if instagram:
 			data["instPage"] = instagram
@@ -176,7 +184,7 @@ class Anixart:
 			collection_id: int = None,
 			parent_comment_id: str = None,
 			replyTo: str = None,
-			spoiler: bool = False):
+			spoiler: bool = False) -> dict:
 		data = {
 			"message": message,
 			"parentCommentId": parent_comment_id,
@@ -198,7 +206,7 @@ class Anixart:
 			message: str,
 			release_comment_id: int = None,
 			collection_comment_id: int = None,
-			spoiler: bool = False):
+			spoiler: bool = False) -> dict:
 		data = {
 			"message": message,
 			"spoiler": spoiler
@@ -213,19 +221,22 @@ class Anixart:
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def get_random_release(self, extended_mode: bool = True):
+	def get_random_release(self, extended_mode: bool = True) -> dict:
 		return requests.get(
 			f"{self.api}/release/random?extended_mode={extended_mode}&token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def get_collection_list(self, page: int = 0):
+	def get_collection_list(self, page: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/collection/all/{page}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def get_release_info(self, release_id: int, extended_mode: bool = True):
+	def get_release_info(
+			self,
+			release_id: int,
+			extended_mode: bool = True) -> dict:
 		return requests.get(
 			f"{self.api}/release/{release_id}?extended_mode={extended_mode}&token={self.token}",
 			headers=self.headers,
@@ -235,50 +246,68 @@ class Anixart:
 			self,
 			release_id: int,
 			page: int = 0,
-			sort: int = 0):
+			sort: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/release/comment/all/{release_id}/{page}?sort={sort}&token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def get_notification_count(self):
+	def get_notification_count(self) -> dict:
 		return requests.get(
 			f"{self.api}/notification/count?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def vote_release(self, release_id: int, star: int = 5):
+	def vote_release(
+			self,
+			release_id: int,
+			star: int) -> dict:
 		return requests.get(
 			f"{self.api}/release/vote/add/{release_id}/{star}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def add_into_profile_list(self, release_id: int, status: int = 3):
+	def add_into_profile_list(
+			self,
+			release_id: int,
+			status: int = 3) -> dict:
 		return requests.get(
 			f"{self.api}/profile/list/add/{status}/{release_id}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def delete_from_profile_list(self, release_id: int, status: int = 3):
+	def delete_from_profile_list(
+			self,
+			release_id: int,
+			status: int = 3) -> dict:
 		return requests.get(
 			f"{self.api}/profile/list/delete/{status}/{release_id}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def add_release_to_favorite(self, release_id: int):
+	def add_release_to_favorite(self, release_id: int) -> dict:
 		return requests.get(
 			f"{self.api}/favorite/add/{release_id}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def delete_release_from_favorite(self, release_id: int):
+	def delete_release_from_favorite(self, release_id: int) -> dict:
 		return requests.get(
 			f"{self.api}/favorite/delete/{release_id}?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	# reasons: 1 = error in design, 2 = missing series. 3 = other
-	def report_release(self, release_id: int, message: str, reason: int = 3):
+	def report_release(
+			self,
+			release_id: int,
+			message: str,
+			reason: int) -> dict:
+		"""
+		RELEASE-REPORT REASON-TYPES:
+			1 - MISTAKE IN DESIGN,
+			2 - MISSING SOME SERIES,
+			3 - OTHER
+		"""
 		data = {
 			"message": message,
 			"reason": reason
@@ -289,12 +318,19 @@ class Anixart:
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	# reasons: 1 = spam, 2 = insults, 3 = call for harassment, 4 = spoiler, 5 = other
 	def report_release_comment(
 			self,
 			comment_id: int,
 			message: str,
-			reason: int = 5):
+			reason: int) -> dict:
+		"""
+		COMMENT-REPORT REASON-TYPES:
+			1 - SPAM,
+			2 - INSULTS,
+			3 - HARASSMENT,
+			4 - SPOILER,
+			5 - OTHER
+		"""
 		data = {
 			"message": message,
 			"reason": reason
@@ -308,32 +344,32 @@ class Anixart:
 			self,
 			comment_id: int,
 			page: int = 0,
-			sort: int = 0):
+			sort: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/release/comment/votes/{comment_id}/{page}?sort={sort}&token={self.token}",
 			headers=self.headers, proxies=self.proxies).json()
 	
-	def send_friend_request(self, user_id: int):
+	def send_friend_request(self, user_id: int) -> dict:
 		return requests.get(
 			f"{self.api}/profile/friend/request/send/{user_id}?token={self.token}",
 			headers=self.headers, proxies=self.proxies).json()
 	
-	def remove_friend_request(self, user_id: int):
+	def remove_friend_request(self, user_id: int) -> dict:
 		return requests.get(
 			f"{self.api}/profile/friend/request/remove/{user_id}?token={self.token}",
 			headers=self.headers, proxies=self.proxies).json()
 	
-	def get_user_profile_list(self, user_id: int, page: int = 1, sort=1):
+	def get_user_profile_list(self, user_id: int, page: int = 1, sort=1) -> dict:
 		return requests.get(
 			f"{self.api}/profile/list/all/{user_id}/{page}/0?sort={sort}&token={self.token}",
 			headers=self.headers, proxies=self.proxies).json()
 	
-	def get_login_info(self):
+	def get_login_info(self) -> dict:
 		return requests.get(
 			f"{self.api}/profile/preference/login/info?token={self.token}",
 			headers=self.headers, proxies=self.proxies).json()
 	
-	def change_login(self, login: str):
+	def change_login(self, login: str) -> dict:
 		return requests.post(
 			f"{self.api}/profile/preference/login/change?login={login}&token={self.token}",
 			headers=self.headers, proxies=self.proxies).json()
@@ -341,7 +377,7 @@ class Anixart:
 	def bind_social_to_profile(
 			self,
 			vk_access_token: str = None,
-			google_id_token: str = None):
+			google_id_token: str = None) -> dict:
 		data = {}
 		if vk_access_token:
 			data["accessToken"] = vk_access_token
@@ -355,19 +391,19 @@ class Anixart:
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def change_password(self, current_password: str, new_password: str):
+	def change_password(self, current_password: str, new_password: str) -> dict:
 		return requests.get(
 			f"{self.api}/profile/preference/password/change?current={current_password}&new={new_password}&token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def change_email(self, current_email: str, new_email: str, password: str):
+	def change_email(self, current_email: str, new_email: str, password: str) -> dict:
 		return requests.get(
 			f"{self.api}/profile/preference/email/change?current_password={password}&current={current_email}&new={new_email}&token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def search_release(self, query: str):
+	def search_release(self, query: str) -> dict:
 		data = {
 			"query": query,
 			"searchBy": 0
@@ -378,31 +414,31 @@ class Anixart:
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def discover_interesting(self):
+	def discover_interesting(self) -> dict:
 		return requests.post(
 			f"{self.api}/discover/interesting",
 			headers=self.headers,
 			proxies=self.proxies).json()
            
-	def discover_comments(self):
+	def discover_comments(self) -> dict:
 		return requests.post(
 			f"{self.api}/discover/comments",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def discover_discussing(self):
+	def discover_discussing(self) -> dict:
 		return requests.post(
 			f"{self.api}/discover/discussing?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 
-	def discover_collections(self):
+	def discover_collections(self) -> dict:
 		return requests.post(
 			f"{self.api}/discover/comments",
 			headers=self.headers,
 			proxies=self.proxies).json()
 	
-	def search_profile(self, query: str):
+	def search_profile(self, query: str) -> dict:
 		data = {
 			"query": query,
 			"searchBy": 0
@@ -413,25 +449,25 @@ class Anixart:
 			headers=self.headers,
 			proxies=self.proxies).json()
 
-	def get_friend_requests(self):
+	def get_friend_requests(self) -> dict:
 		return requests.get(
 			f"{self.api}/profile/friend/requests/in/last?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 
-	def get_sent_friend_requests(self):
+	def get_sent_friend_requests(self) -> dict:
 		return requests.get(
 			f"{self.api}/profile/friend/requests/out/last?token={self.token}",
 			headers=self.headers,
 			proxies=self.proxies).json()
 
-	def get_friend_recommendations(self):
+	def get_friend_recommendations(self) -> dict:
 		return requests.get(
 			f"{self.api}/profile/friend/recommendations?token={self.token}", 
 			headers=self.headers,
 			proxies=self.proxies).json()
 
-	def accept_friend_request(self, user_id: int):
+	def accept_friend_request(self, user_id: int) -> dict:
 		return requests.get(
 			f"{self.api}/profile/friend/request/send/{user_id}?token={self.token}", 
 			headers=self.headers,
@@ -441,7 +477,7 @@ class Anixart:
 			self,
 			user_id: int,
 			page: int = 0,
-			sort: int = 0):
+			sort: int = 0) -> dict:
 		return requests.get(
 			f"{self.api}/release/comment/all/profile/{user_id}/{page}?sort={sort}&token={self.token}",
 			headers=self.headers,
