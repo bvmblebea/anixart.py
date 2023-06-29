@@ -6,7 +6,8 @@ class Anixart:
 		self.headers = {
 			"User-Agent": "AnixartApp/8.0-22050323 (Android 7.1.2; SDK 25; x86; samsung SM-N975F; ru)",
 			"Connection": "Keep-Alive",
-			"Accept-Encoding": "gzip"
+			"Accept-Encoding": "gzip",
+			"Content-Type": "application/json"
 		}
 		self.token = None
 		self.user_id = None
